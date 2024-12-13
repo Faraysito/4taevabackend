@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% if agente %}
+            Modificar Agente
+        {% else %}
+            Agregar Agente
+        {% endif %}
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Barra de Navegación en rojo con "AGREGAR AGENTES" -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">AGREGAR AGENTES</a>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">{% if agente %}Modificar{% else %}Agregar{% endif %} Agente</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Campo oculto para el ID del agente (solo en caso de modificación) -->
+        {% if agente %}
+            <input type="hidden" name="id" value="{{ agente.id }}">
+        {% endif %}
+
+        <!-- Campo: Nombre del Agente -->
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre del Agente</label>
+            <input 
+                type="text" 
+                class="form-control" 
+                id="nombre" 
+                name="nombre" 
+                value="{% if agente %}{{ agente.nombre }}{% endif %}" 
+                required
+            >
+        </div>
+
+        <!-- Campo: Descripción del Agente -->
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea 
+                class="form-control" 
+                id="descripcion" 
+                name="descripcion" 
+                rows="3" 
+                required
+            >{% if agente %}{{ agente.descripcion }}{% endif %}</textarea>
+        </div>
+
+        <!-- Campo: Imagen del Agente -->
+        <div class="mb-3">
+            <label for="imagen" class="form-label">Imagen del Agente</label>
+            <input 
+                type="file" 
+                class="form-control" 
+                id="imagen" 
+                name="imagen" 
+                accept="image/*"
+            >
+            {% if agente and agente.imagen %}
+                <img 
+                    src="{{ agente.imagen.url }}" 
+                    alt="Imagen del agente" 
+                    class="img-fluid mt-3" 
+                    style="max-height: 200px;"
+                >
+            {% endif %}
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="d-flex justify-content-between">
+            {% if agente %}
+                <button type="submit" class="btn btn-warning">Modificar Agente</button>
+                <a href="{% url 'eliminar_agente' agente.id %}" class="btn btn-danger">Eliminar Agente</a>
+            {% else %}
+                <button type="submit" class="btn btn-danger">Agregar Agente</button>
+            {% endif %}
+            <a href="{% url 'lista_agente' categoria.id %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

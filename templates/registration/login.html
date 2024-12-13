@@ -1,0 +1,28 @@
+{% extends "agentes/home.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block menu %}{% endblock menu %}
+
+{% block contenido %}
+<div class="row justify-content-center mt-5">
+    <div class="card col-md-6 col-lg-4 shadow-sm border-0">
+        <div class="card-header bg-danger text-white text-center">
+            <img src="{% static 'images/valorantlogo.png' %}" 
+                alt="logo de la empresa" class="img-fluid" style="max-width: 150px;">
+        </div>
+        <div class="card-body">
+            <h5 class="text-center mb-4">Inicio de Sesión</h5>
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="d-flex justify-content-between mt-3">
+                    <button type="reset" class="btn btn-outline-secondary">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Iniciar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}

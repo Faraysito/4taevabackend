@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Agente - {{ agente.nombre }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilos globales */
+        body {
+            background-color: #f4f7fa;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Barra de navegación roja */
+        .navbar {
+            background-color: #e74c3c;
+        }
+
+        .navbar-brand, .nav-link {
+            color: white !important;
+        }
+
+        .navbar-nav .nav-link {
+            margin-right: 20px;
+        }
+
+        /* Estilo para la imagen del agente */
+        .agente-img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Tarjeta del agente */
+        .agente-card {
+            border: 1px solid #e1e8ed;
+            border-radius: 15px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 800px;
+            flex-grow: 1;
+            justify-content: space-between;
+            margin: 30px auto; /* Centra la tarjeta en la página */
+        }
+
+        /* Títulos y textos */
+        .agente-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .agente-description {
+            font-size: 1rem;
+            color: #7f8c8d;
+            line-height: 1.7;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+
+        .agente-price {
+            font-size: 1.4rem;
+            color: #27ae60;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .agente-stock {
+            font-size: 1.1rem;
+            color: #e74c3c;
+            font-weight: 500;
+            margin: 10px 0;
+        }
+
+        /* Botón de Volver */
+        .btn-back {
+            background-color: #e74c3c;
+            color: white;
+            font-weight: bold;
+            border-radius: 6px;
+            padding: 12px 30px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+            margin-bottom: 10px; /* Se agrega un margen inferior */
+        }
+
+        .btn-back:hover {
+            background-color: #c0392b;
+        }
+
+        /* Estilo de botones de acción */
+        .btn-actions a, .btn-actions button {
+            background-color: #e74c3c;
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-weight: bold;
+            margin: 5px 0; /* Márgenes verticales */
+            transition: transform 0.3s ease;
+            color: white;
+            border: none;
+            width: 100%; /* Los botones ocupan todo el ancho disponible */
+            text-align: center;
+        }
+
+        .btn-actions a:hover, .btn-actions button:hover {
+            background-color: #c0392b;
+            transform: scale(1.05);
+        }
+
+        /* Posicionamiento de los botones en la parte inferior derecha */
+        .btn-actions {
+            display: flex;
+            flex-direction: column; /* Cambiado para que los botones estén uno encima del otro */
+            justify-content: flex-start; /* Asegura que los botones estén alineados al inicio */
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        /* Mejorar la visualización en pantallas pequeñas */
+        @media (max-width: 767px) {
+            .agente-card {
+                padding: 15px;
+            }
+
+            .agente-title {
+                font-size: 1.6rem;
+            }
+
+            .agente-price, .agente-stock {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Barra de navegación roja -->
+<nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="#">Agente</a>
+    <div class="collapse navbar-collapse">
+    </div>
+</nav>
+
+<!-- Detalle del agente -->
+<h1 class="agente-title">{{ agente.nombre }}</h1>
+
+<div class="agente-card">
+    <div class="row">
+        <!-- Imagen del agente -->
+        <div class="col-md-6 mb-4">
+            {% if agente.imagen %}
+                <img src="{{ agente.imagen.url }}" alt="{{ agente.nombre }}" class="agente-img">
+            {% else %}
+                <img src="https://via.placeholder.com/500x300?text=Sin+Imagen" alt="Imagen no disponible" class="agente-img">
+            {% endif %}
+        </div>
+
+        <!-- Información del agente -->
+        <div class="col-md-6">
+
+        </div>
+    </div>
+
+    <!-- Botones de acción, uno encima del otro -->
+    <div class="btn-actions">
+
+                <!-- Información del agente -->
+        <div class="col-md-6">
+            <h3 class="mb-3">Descripción:</h3>
+            <p class="agente-description">{{ agente.descripcion }}</p>
+            <hr>
+            <!-- Volver a la lista de agentes -->
+            <a href="{% url 'lista_agente' categoria.id %}" class="btn-back">VOLVER</a>
+        </div>
+        <!-- Volver encima del Editar -->
+        <a href="{% url 'editar_agente' agente.id %}" class="btn">EDITAR</a>
+        <form method="POST" action="{% url 'eliminar_agente' agente.id %}" class="d-inline-block">
+            {% csrf_token %}
+            <button type="submit" class="btn">ELIMINAR</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
