@@ -77,8 +77,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pjs2',  # Nombre de tu base de datos
         'USER': 'farayzin',  # Usuario de MySQL en PythonAnywhere
-        'PASSWORD': 'F@rias0301',  # Contraseña de tu base de datos
-        'HOST': 'farayzin.mysql.pythonanywhere-services.com',
+        'PASSWORD': '',  # Contraseña de tu base de datos
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }
