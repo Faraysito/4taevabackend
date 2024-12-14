@@ -82,17 +82,3 @@ def eliminar_agente(request, agente_id):
         return redirect('lista_agente', categoria_id=categoria.id)
     else:
         return render(request, 'agentes/eliminar_agente.html', {'agente': agente, 'categoria': categoria})
-
-# ============================
-# API Básica
-# ============================
-
-# API básica para listar agentes
-def agentes_api(request):
-    agentes = Agentes.objects.all()
-    data = {
-        'agentes': list(
-            agentes.values('id', 'nombre', 'descripcion', 'categoria__nombre')
-        )
-    }
-    return JsonResponse(data, safe=False)

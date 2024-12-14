@@ -5,15 +5,6 @@ from rest_framework import status
 from agentes.models import Agentes
 from .serializers import AgentesSerializer
 
-def agentes_api(request):
-    agentes = Agentes.objects.all()
-    data = {
-        'agentes': list(
-            agentes.values('id', 'nombre', 'descripcion', 'categoria__nombre')
-        )
-    }
-    return JsonResponse(data, safe=False)
-
 @api_view(['GET', 'POST'])
 def agentes_listado(request):
     if request.method == 'GET':

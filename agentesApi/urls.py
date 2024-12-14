@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import agentes_api
+from agentesApi import views
 
 urlpatterns = [
-    path('agentes/', agentes_api, name='agentes_api'),
+    path('agentes/', views.agentes_listado, name='agentes_listado'),
+    path('agentes/<int:pk>/', views.agentes_detalle, name='agentes_detalle' )
 ]

@@ -92,8 +92,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pjs2',           # Nombre de la base de datos
-        'USER': 'user_pjs2',      # Usuario de MySQL
-        'PASSWORD': 'asd123',     # Contraseña de MySQL
+        'USER': 'root',      # Usuario de MySQL
+        'PASSWORD': '',     # Contraseña de MySQL
         'HOST': 'localhost',      # Localhost
         'PORT': '3306',           # Puerto de MySQL
     }
